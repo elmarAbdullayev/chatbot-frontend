@@ -1,27 +1,98 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-function Register(){
+
+function Register() {
+
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    role:'user'
+  });
+  const [error,setError] = useState("")
+
+  const handleChange = (e) => {
+    setFormData({...formData, [e.target.name]: e.target.value});
+  };
+
+  const navigate = useNavigate()
 
 
-     return(
-        <div>
-              <form>
-      <h2>Register</h2>
+  const url = "http://localhost:8000/register";
 
-      <label>Email:</label><br />
-      <input type="email" name="email" required /><br /><br />
 
-      <label>Username:</label><br />
-      <input type="text" name="username" required /><br /><br />
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("Form data:", formData);
 
-      <label>Password:</label><br />
-      <input type="password" name="password" required /><br /><br />
+  
+      try {
+        const request  = await fetch(url,{
+          method : "post",
+          headers: { "Content-Type": "application/json" },
+          body : JSON.stringify(formData)
 
-      <button type="submit">Register</button>
-    </form>
+       })
+
+       if(!request.ok){
+        throw new Error("Diese Email ist schon benutzt.")
+    }
+
+    navigate("/")
+    console.log("Hello ")
+      } catch (error) {
+        setError(error.message)
+      }
+
+   
+      
+
+   };
+
+  return (
+    <div className="container mt-5" style={{ maxWidth: "400px" }}>
+      <h3>Registrieren</h3>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <label className="form-label">Benutzername</label>
+          <input
+            type="text"
+            className="form-control"
+            name="name"
+            value={formData.username}
+            onChange={handleChange}
+            required />
         </div>
-     )
 
+        <div className="mb-3">
+          <label className="form-label">E-Mail</label>
+          <input
+            type="email"
+            className="form-control"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required />
+        </div>
 
+        <div className="mb-3">
+          <label className="form-label">Passwort</label>
+          <input
+            type="password"
+            className="form-control"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            required />
+        </div>
+
+        <h6 className='text-danger'>{error}</h6>
+
+        <button type="submit" className="btn btn-primary w-100">Registrieren</button>
+      </form>
+    </div>
+  );
 }
 
 export default Register;

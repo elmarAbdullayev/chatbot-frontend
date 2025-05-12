@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 function App() {
   const [tempToken, setTempToken] = useState(localStorage.getItem('token'));
 
-  const funk = (token) => {
+  const funk = (token,setToken) => {
     localStorage.setItem('token', token);
     setTempToken(token);  
   };
@@ -16,7 +16,7 @@ function App() {
     <Router>
       <Routes>
         <Route exact path="/" element={<Form funk={funk} />} />
-        <Route exact path="/profil" element={<Profil token={tempToken} />} />
+        <Route exact path="/profil" element={<Profil token={tempToken}  setTempToken={setTempToken}/>} />
         <Route exact path="/register" element={<Register/>} />
       </Routes>
     </Router>

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../css/FormCss.css'
 
 function Form({funk}){
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const [token, setToken] = useState('');
 
     const navigate = useNavigate()
   
@@ -34,7 +34,6 @@ function Form({funk}){
     
         const result = await response.json();
         funk(result.access_token) // sende ich token zu Component App,damit token zu component Profil weitergeleitet werden kann.
-        setToken(result.access_token);
         navigate("/profil")
         alert('Login erfolgreich!');
       } catch (error) {
@@ -49,11 +48,18 @@ function Form({funk}){
     }
 
     return(
-        <div>
-             <h2>Login</h2>
+      <div className='superDiv'>
+
+        <div className='container'>
+
+
       <form onSubmit={handleSubmit} className="login-form">
+
+      <h2 className='text-center fs-1'>Login</h2>
+
+      <label htmlFor="email" className=''>E-Mail</label>
+
         <div className="input-group">
-          <label htmlFor="email">E-Mail</label>
           <input
             type="email"
             id="email"
@@ -63,8 +69,9 @@ function Form({funk}){
             required
           />
         </div>
+
+        <label htmlFor="password">Passwort</label>
         <div className="input-group">
-          <label htmlFor="password">Passwort</label>
           <input
             type="password"
             id="password"
@@ -74,14 +81,22 @@ function Form({funk}){
             required
           />
         </div>
+
         {error && <p className="error">{error}</p>}
+
+        <div className='buttons'> 
         <button type="submit" className="submit-btn">Einloggen</button>
 
         <button onClick={(e)=>registerClick(e)}>Register</button>
+        </div>
+    
      
 
       </form>
         </div>
+
+        </div>
+
     )
 }
 

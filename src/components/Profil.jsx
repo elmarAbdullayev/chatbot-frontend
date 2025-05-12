@@ -1,66 +1,97 @@
-import { useEffect, useState } from "react";
+import React, { useState } from 'react';
+import axios from 'axios';
 
-function Profil({ token }) {
+const Profil = () => {
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const url = "http://localhost:8000/profil";
+  const handleSendMessage = async () => {
+    if (!input.trim() || isLoading) return;
 
-  const [data, setData] = useState(() => {
-    const savedData = localStorage.getItem('userData');
-    return savedData ? JSON.parse(savedData) : null;
-  });
+    const userMessage = { text: input, sender: 'user' };
+    setMessages(prev => [...prev, userMessage]);
+    setInput('');
+    setIsLoading(true);
 
-  useEffect(() => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/chatbot",
+        { messages: [{ role: "user", content: input }] },
+        { headers: { "Content-Type": "application/json" } }
+      );
 
-    async function fetchData() {
-      try {
-        const response = await fetch(url, {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          }
-        });
+      const botMessage = { 
+        text: response.data.answer, 
+        sender: "bot" 
+      };
+      setMessages(prev => [...prev, botMessage]);
 
-        if (!response.ok) {
-          console.log("Etwas ist falsch");
-          return; // Falls der Response nicht ok ist, gehe nicht weiter
-        }
-
-        const info = await response.json();
-        setData(info.data); // setze den Zustand korrekt
-        localStorage.setItem('userData', JSON.stringify(info.data));
-      } catch (error) {
-        console.error("Fehler:", error); // Fehlerprotokollierung
-      }
+    } catch (error) {
+      console.error("API Error:", error.response?.data || error.message);
+      setMessages(prev => [...prev, { 
+        text: "Sorry, an error occurred.", 
+        sender: "bot" 
+      }]);
+    } finally {
+      setIsLoading(false);
     }
-
-    fetchData();
-  }, [token]); 
-
-  
-  if (data === null) {
-    return <div>Loading...</div>; 
-  }
+  };
 
   return (
-    <div>
-      {data.privatdata ? (
-        <div>
-          <h1>{data.privatdata.name}</h1>
-          <p>Alter: {data.privatdata.age}</p>
-          <p>Beruf: {data.privatdata.job}</p>
+    <div style={{ maxWidth: "600px", margin: "0 auto",marginTop:"10vh" }}>
+      <div style={{ 
+        height: "400px", 
+        overflowY: "auto", 
+        border: "1px solid #ddd", 
+        padding: "10px",
+        marginBottom: "10px" 
+      }}>
+        {messages.map((msg, i) => (
+          <div key={i} style={{ 
+            textAlign: msg.sender === 'user' ? 'right' : 'left',
+            margin: "5px 0",
+            padding: "5px",
+            backgroundColor: msg.sender === 'user' ? "#e3f2fd" : "#f5f5f5",
+            borderRadius: "5px"
+          }}>
+            <strong>{msg.sender}:</strong> {msg.text}
+          </div>
+        ))}
+        {isLoading && <div style={{ textAlign: "left" }}>...</div>}
+      </div>
 
-        <p>FirstProgrammLanguage: {data.programmlanguages.first}</p>
-        <p>SecondProgrammLanguage: {data.programmlanguages.second}</p>
-        </div>
-
-
-
-
-      ) : (
-        <p>Fehler: Keine Profil-Daten gefunden.</p>
-      )}
+      <div style={{ display: "flex" }}>
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+          style={{ 
+            flexGrow: 1, 
+            padding: "10px", 
+            border: "1px solid #ccc",
+            borderRadius: "4px 0 0 4px" 
+          }}
+          placeholder="Type your message..."
+        />
+        <button
+          onClick={handleSendMessage}
+          disabled={isLoading}
+          style={{ 
+            padding: "10px 15px",
+            background: "#1976d2",
+            color: "white",
+            border: "none",
+            borderRadius: "0 4px 4px 0",
+            cursor: "pointer"
+          }}
+        >
+          {isLoading ? "Sending..." : "Send"}
+        </button>
+      </div>
     </div>
   );
-}
+};
 
 export default Profil;
