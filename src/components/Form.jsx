@@ -10,8 +10,9 @@ function Form({funk}){
 
     const navigate = useNavigate()
   
-    const url = "http://localhost:8000/login";
-  
+    const url = "https://chatbot-backend-uu0i.onrender.com/login";
+    
+
     const handleSubmit = async (e) => {
       e.preventDefault();
     

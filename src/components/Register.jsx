@@ -19,7 +19,7 @@ function Register() {
   const navigate = useNavigate()
 
 
-  const url = "http://localhost:8000/register";
+  const url = "https://chatbot-backend-uu0i.onrender.com/register";
 
 
   const handleSubmit = async (e) => {

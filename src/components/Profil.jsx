@@ -16,7 +16,7 @@ const Profil = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/chatbot",
+        "https://chatbot-backend-uu0i.onrender.com/chatbot",
         { messages: [{ role: "user", content: input }] },
         { headers: { "Content-Type": "application/json" } }
       );
