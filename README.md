@@ -1,70 +1,181 @@
-# Getting Started with Create React App
+# Chatbot Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern React application that provides a user interface for an AI-powered chatbot. The frontend communicates with a FastAPI backend, allowing users to register, log in securely, and interact with an AI assistant through a clean web interface.
 
-## Available Scripts
+> **Note:** This repository contains only the frontend. The FastAPI backend is maintained in a separate repository.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+* User registration
+* Secure user login
+* JWT-based authentication
+* AI chatbot interface
+* Real-time messaging
+* Responsive user interface
+* React Router navigation
+* REST API integration
+* Docker support
+* Ready for Firebase Hosting
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## Technologies
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* React
+* React Router DOM
+* Axios
+* JavaScript (ES6+)
+* CSS3
+* Docker
+* Firebase Hosting
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Project Structure
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```text
+chatbot-frontend/
+│
+├── src/
+│   ├── components/
+│   │   ├── Form.jsx
+│   │   ├── Register.jsx
+│   │   └── Profil.jsx
+│   │
+│   ├── css/
+│   │   └── FormCss.css
+│   │
+│   ├── App.js
+│   └── index.js
+│
+├── Dockerfile
+├── firebase.json
+├── package.json
+└── README.md
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## Features Overview
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Authentication
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+* User registration
+* Login using email and password
+* JWT token storage
+* Protected user session
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### AI Chat
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+* Send messages to an AI assistant
+* Receive AI-generated responses
+* Loading indicator while waiting for responses
+* Chat history during the session
 
-## Learn More
+### Navigation
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+* Login page
+* Registration page
+* Chat page
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## Getting Started
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Clone the repository
 
-### Analyzing the Bundle Size
+```bash
+git clone https://github.com/yourusername/chatbot-frontend.git
+cd chatbot-frontend
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+### Install dependencies
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```bash
+npm install
+```
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Start the development server
 
-### Deployment
+```bash
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+The application will run at
 
-### `npm run build` fails to minify
+```text
+http://localhost:3000
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+
+## Backend Connection
+
+The frontend communicates with a FastAPI backend through REST API endpoints.
+
+Current endpoints include:
+
+| Method | Endpoint    | Description                    |
+| ------ | ----------- | ------------------------------ |
+| POST   | `/register` | Register a new user            |
+| POST   | `/login`    | Authenticate user              |
+| POST   | `/chatbot`  | Send prompts to the AI chatbot |
+
+---
+
+## Docker
+
+Build the Docker image
+
+```bash
+docker build -t chatbot-frontend .
+```
+
+Run the container
+
+```bash
+docker run -p 3000:3000 chatbot-frontend
+```
+
+---
+
+## Learning Objectives
+
+This project was developed to improve practical skills in:
+
+* React development
+* Component-based architecture
+* React Hooks
+* Routing with React Router
+* REST API communication
+* Authentication workflows
+* State management
+* Docker containerization
+* Frontend and backend integration
+
+---
+
+## Future Improvements
+
+* Responsive mobile layout
+* Dark mode
+* Typing animation
+* Chat history persistence
+* Markdown support
+* User profile page
+* Better error handling
+* Token refresh
+* Environment variable configuration
+* Unit testing with Jest
+
+---
+
+## Author
+
+Developed as a personal learning project to improve frontend development skills using React while integrating a custom FastAPI backend.
